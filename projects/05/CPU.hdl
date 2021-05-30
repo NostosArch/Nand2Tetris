@@ -1,0 +1,97 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/05/CPU.hdl
+
+/**
+ * The Hack CPU (Central Processing unit), consisting of an ALU,
+ * two registers named A and D, and a program counter named PC.
+ * The CPU is designed to fetch and execute instructions written in 
+ * the Hack machine language. In particular, functions as follows:
+ * Executes the inputted instruction according to the Hack machine 
+ * language specification. The D and A in the language specification
+ * refer to CPU-resident registers, while M refers to the external
+ * memory location addressed by A, i.e. to Memory[A]. The inM input 
+ * holds the value of this location. If the current instruction needs 
+ * to write a value to M, the value is placed in outM, the address 
+ * of the target location is placed in the addressM output, and the 
+ * writeM control bit is asserted. (When writeM==0, any value may 
+ * appear in outM). The outM and writeM outputs are combinational: 
+ * they are affected instantaneously by the execution of the current 
+ * instruction. The addressM and pc outputs are clocked: although they 
+ * are affected by the execution of the current instruction, they commit 
+ * to their new values only in the next time step. If reset==1 then the 
+ * CPU jumps to address 0 (i.e. pc is set to 0 in next time step) rather 
+ * than to the address resulting from executing the current instruction. 
+ */
+
+CHIP CPU {
+
+    IN  inM[16],         // M value input  (M = contents of RAM[A])
+        instruction[16], // Instruction for execution
+        reset;           // Signals whether to re-start the current
+                         // program (reset==1) or continue executing
+                         // the current program (reset==0).
+
+    OUT outM[16],        // M value output
+        writeM,          // Write to M? 
+        addressM[15],    // Address in data memory (of M)
+        pc[15];          // address of next instruction
+
+    PARTS:
+    
+    Mux16 (a = instruction, b = ALUoutput, sel  = instruction[15], out = RegAinput);
+    
+    Register (in = RegAinput, load = Aload, out = RegAoutput, out[0..14] = addressM);
+
+    Mux16 (a = RegAoutput, b = inM, sel = instruction[12], out = ALUinput);
+
+    Register (in = ALUoutput, load = Dload, out = RegDoutput);
+
+    Mux (a = true,  b = instruction[11], sel = instruction[15], out = c1); 
+    Mux (a = false, b = instruction[10], sel = instruction[15], out = c2); 
+    Mux (a = true,  b = instruction[9], sel =  instruction[15], out = c3); 
+    Mux (a = false, b = instruction[8], sel = instruction[15], out = c4); 
+    Mux (a = true,  b = instruction[7], sel = instruction[15], out = c5); 
+    Mux (a = false, b = instruction[6], sel = instruction[15], out = c6); 
+
+    ALU (x = RegDoutput, y = ALUinput, zx = c1, nx = c2, zy = c3, ny = c4, f = c5, no = c6, zr = zerout , ng = negout , out = ALUoutput, out = outM);
+
+    And (a = instruction[15], b = instruction[3], out = writeM);
+
+    And (a = instruction[15], b = instruction[4], out = Dload);
+
+    Not (in = instruction[15], out = NegateAorCinst);
+
+    Or (a = NegateAorCinst, b = instruction[5], out = Aload);
+
+
+
+    DMux8Way (in = true, sel[0] = instruction[0], sel[1] = instruction[1], sel[2] = instruction[2],
+    		a = j0, b = j1, c = j2, d = j3, e = j4, f = j5, g = j6, h = j7);
+
+    Not (in = zerout, out = zeroutbar);
+    Not (in = negout, out = negoutbar);
+     
+    And (a = zeroutbar, b = negoutbar, out = cond1);
+    And (a = j1, b = cond1, out = load1);
+
+    And (a = j2, b = zerout, out = load2);
+
+    And (a = j3, b = negoutbar, out = load3);
+
+    And (a = j4, b = negout, out = load4);
+
+    And (a = j5, b = zeroutbar, out = load5);
+
+    Or (a = zerout, b = negout, out = cond6);
+    And (a = j6, b = cond6, out = load6);
+
+    Or8Way (in[0] = load1, in[1] = load2, in[2] = load3, in[3] = load4, 
+    	in[4] = load5, in[5] = load6, in[6] = j7, in[7] = false, out = jumpload);
+
+    And (a = jumpload, b = instruction[15], out = loadout);
+
+    PC (in = RegAoutput, reset = reset, load = loadout, inc = true, out[0..14] = pc);
+
+}

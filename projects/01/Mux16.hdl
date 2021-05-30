@@ -1,0 +1,71 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/01/Mux16.hdl
+
+/**
+ * 16-bit multiplexor: 
+ * for i = 0..15 out[i] = a[i] if sel == 0 
+ *                        b[i] if sel == 1
+ */
+
+CHIP Mux16 {
+    IN a[16], b[16], sel;
+    OUT out[16];
+
+    PARTS:
+
+    Not (in = sel, out = selbar);
+    And (a = a[0], b = selbar, out = mux11);
+    And (a = a[1], b = selbar, out = mux12);
+    And (a = a[2], b = selbar, out = mux13);
+    And (a = a[3], b = selbar, out = mux14);
+    And (a = a[4], b = selbar, out = mux15);
+    And (a = a[5], b = selbar, out = mux16);
+    And (a = a[6], b = selbar, out = mux17);
+    And (a = a[7], b = selbar, out = mux18);
+    And (a = a[8], b = selbar, out = mux19);
+    And (a = a[9], b = selbar, out = mux110);
+    And (a = a[10], b = selbar, out = mux111);
+    And (a = a[11], b = selbar, out = mux112);
+    And (a = a[12], b = selbar, out = mux113);
+    And (a = a[13], b = selbar, out = mux114);
+    And (a = a[14], b = selbar, out = mux115);
+    And (a = a[15], b = selbar, out = mux116);
+    
+    And (a = b[0], b = sel, out = mux21);
+    And (a = b[1], b = sel, out = mux22);
+    And (a = b[2], b = sel, out = mux23);
+    And (a = b[3], b = sel, out = mux24);
+    And (a = b[4], b = sel, out = mux25);
+    And (a = b[5], b = sel, out = mux26);
+    And (a = b[6], b = sel, out = mux27);
+    And (a = b[7], b = sel, out = mux28);
+    And (a = b[8], b = sel, out = mux29);
+    And (a = b[9], b = sel, out = mux210);
+    And (a = b[10], b = sel, out = mux211);
+    And (a = b[11], b = sel, out = mux212);
+    And (a = b[12], b = sel, out = mux213);
+    And (a = b[13], b = sel, out = mux214);
+    And (a = b[14], b = sel, out = mux215);
+    And (a = b[15], b = sel, out = mux216);
+
+
+    Or (a = mux11, b =mux21, out = out[0]);
+    Or (a = mux12, b =mux22, out = out[1]);
+    Or (a = mux13, b =mux23, out = out[2]);
+    Or (a = mux14, b =mux24, out = out[3]);
+    Or (a = mux15, b =mux25, out = out[4]);
+    Or (a = mux16, b =mux26, out = out[5]);
+    Or (a = mux17, b =mux27, out = out[6]);
+    Or (a = mux18, b =mux28, out = out[7]);
+    Or (a = mux19, b =mux29, out = out[8]);
+    Or (a = mux110, b =mux210, out = out[9]);
+    Or (a = mux111, b =mux211, out = out[10]);
+    Or (a = mux112, b =mux212, out = out[11]);
+    Or (a = mux113, b =mux213, out = out[12]);
+    Or (a = mux114, b =mux214, out = out[13]);
+    Or (a = mux115, b =mux215, out = out[14]);
+    Or (a = mux116, b =mux216, out = out[15]);
+	    
+}

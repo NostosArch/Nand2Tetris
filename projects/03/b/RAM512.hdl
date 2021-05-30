@@ -1,0 +1,25 @@
+// This file is part of the materials accompanying the book 
+// "The Elements of Computing Systems" by Nisan and Schocken, 
+// MIT Press. Book site: www.idc.ac.il/tecs
+// File name: projects/03/b/RAM512.hdl
+
+/**
+ * Memory of 512 registers, each 16 bit-wide. Out holds the value
+ * stored at the memory location specified by address. If load==1, then 
+ * the in value is loaded into the memory location specified by address 
+ * (the loaded value will be emitted to out from the next time step onward).
+ */
+CHIP RAM512 {
+    IN in[16], load, address[9];
+    OUT out[16];
+
+    PARTS:
+
+        DMux (in = load, sel = address[8], a = RegLoadA, b = RegLoadB);
+
+        RAM256 (in = in, load = RegLoadA, address = address[0..7], out = RegOutA);
+        RAM256 (in = in, load = RegLoadB, address = address[0..7], out = RegOutB);
+
+        Mux16 (a = RegOutA, b = RegOutB, sel = address[8], out = out);
+}
+

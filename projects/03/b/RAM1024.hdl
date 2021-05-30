@@ -1,0 +1,14 @@
+CHIP RAM1024 {
+    IN in[16], load, address[10];
+    OUT out[16];
+
+    PARTS:
+
+        DMux (in = load, sel = address[9], a = RegLoadA, b = RegLoadB);
+
+        RAM512 (in = in, load = RegLoadA, address = address[0..8], out = RegOutA);
+        RAM512 (in = in, load = RegLoadB, address = address[0..8], out = RegOutB);
+
+        Mux16 (a = RegOutA, b = RegOutB, sel = address[9], out = out);
+}
+
