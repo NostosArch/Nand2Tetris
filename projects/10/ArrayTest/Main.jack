@@ -23,8 +23,8 @@ class Main {
 	
 	let i = 0;
 	let sum = 0;
-	
-	while (i < length) {
+
+while (i < length) {
 	    let sum = sum + a[i];
 	    let i = i + 1;
 	}
