@@ -421,7 +421,7 @@ class CompilationEngine :
 
     def CompileLet(self):
         
-        self.file.write("<letStatement>\n")
+      #  self.file.write("<letStatement>\n")
         
 #        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  #let
         
@@ -445,32 +445,57 @@ class CompilationEngine :
 
         self.token_advance()
         
-        if(self.data.text != "="):
+        if(self.data.text == "["):
             
-            self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # [
-
+        #    self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # [
+            
             self.token_advance()
 
             self.CompileExpression()
+
+            self.VMWriter.writePush(var_kind,var_index)
+
+            self.VMWriter.writeArithmetic("add")
              
-            self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ]
+        #    self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ]
+ 
+            # = 
+            
+            self.token_advance()
 
             self.token_advance()
             
-        
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # =
+            self.CompileExpression()
 
-        self.token_advance()
+            self.VMWriter.writePop("temp",0)
 
-        self.CompileExpression()
+            self.VMWriter.writePop("pointer",1)
 
-        self.VMWriter.writePop(var_kind,var_index)
+            self.VMWriter.writePush("temp",0)
+
+            self.VMWriter.writePop("that",0)
          
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ;
+            #  self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ;
         
-        self.token_advance()
+            self.token_advance()
 
-        self.file.write("</letStatement>\n")
+           
+        
+       # self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # =
+
+        else:
+            
+            self.token_advance()
+            
+            self.CompileExpression()
+
+            self.VMWriter.writePop(var_kind,var_index)
+         
+            #  self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ;
+        
+            self.token_advance()
+
+            #  self.file.write("</letStatement>\n")
 
         return
 
@@ -649,7 +674,7 @@ class CompilationEngine :
             
             elif(operation == "divide"):
 
-                self.VMWrite.writeCall("Math.divide",2)
+                self.VMWriter.writeCall("Math.divide",2)
 
         #self.file.write("</expression>\n")
 
@@ -657,16 +682,30 @@ class CompilationEngine :
 
     def CompileTerm(self):
 
-        self.file.write("<term>\n")
+        #self.file.write("<term>\n")
 
         if(self.data.tag != "identifier" and self.data.text != "~" and self.data.text != "-" and self.data.text != "("):
 
           #  self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # non-idenitifer
             
 
-            if self.data.tag in ["integerConstant","stirngConstant"]:
+            if self.data.tag  == "integerConstant":
 
                 self.VMWriter.writePush("constant",self.data.text)
+
+            elif self.data.tag == "stringConstant":
+
+                for i,char in enumerate(self.data.text):
+
+                    if i == 0:
+
+                        self.VMWriter.writePush("constant",len(self.data.text))
+
+                        self.VMWriter.writeCall("String.new",1)
+
+                    self.VMWriter.writePush("constant",ord(char))
+
+                    self.VMWriter.writeCall("String.appendChar",2)
 
             if self.data.tag == "keyword":
 
@@ -683,6 +722,11 @@ class CompilationEngine :
                 elif self.data.text == "this":
 
                     self.VMWriter.writePush("pointer",0)
+
+                elif self.data.text == "null":
+
+                    self.VMWriter.writePush("constant",0)
+
 
             self.token_advance()
 
@@ -704,7 +748,29 @@ class CompilationEngine :
             if(self.token_check() != "[" and self.token_check() != "(" and self.token_check() != "."):
                 
 #                self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # varName
+
+                var_name = self.data.text
+
+                var_kind = self.SymTable.KindOf(var_name)
+
+                if(var_kind == "var"):
+
+                    var_kind = "local"
                 
+                elif(var_kind == "field"):
+
+                    var_kind = "this"
+
+                var_index = self.SymTable.IndexOf(var_name)
+                
+                self.VMWriter.writePush(var_kind,var_index)
+
+                self.token_advance()
+            
+            elif(self.token_check() == "["):
+                
+                #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # varName
+
                 var_name = self.data.text
 
                 var_kind = self.SymTable.KindOf(var_name)
@@ -719,23 +785,23 @@ class CompilationEngine :
 
                 var_index = self.SymTable.IndexOf(var_name)
 
-                self.VMWriter.writePush(var_kind,var_index)
-
-                self.token_advance()
-            
-            elif(self.token_check() == "["):
-                
-                self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # varName
-                
                 self.token_advance()
 
-                self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # [
+                #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # [
     
                 self.token_advance()
 
                 self.CompileExpression()
+
+                self.VMWriter.writePush(var_kind,var_index)
                 
-                self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ]
+                self.VMWriter.writeArithmetic("add")
+
+                self.VMWriter.writePop("pointer",1)
+
+                self.VMWriter.writePush("that",0)
+
+                #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # ]
 
                 self.token_advance()
 
