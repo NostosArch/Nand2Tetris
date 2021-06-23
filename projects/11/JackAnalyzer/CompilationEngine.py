@@ -9,7 +9,7 @@ class CompilationEngine :
 
         self.root = ET.parse(tokens_file).getroot()
         
-        self.file = open(tokens_file.split("T.xml")[0]+"Ti.xml","w")
+#        self.file = open(tokens_file.split("T.xml")[0]+"Ti.xml","w")
         
         self.token = 0 
 
@@ -44,19 +44,19 @@ class CompilationEngine :
 
     def CompileClass(self):
 
-        self.file.write("<class>\n")
+        #self.file.write("<class>\n")
         
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  #class
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  #class
 
         self.token_advance()
 
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") #class name
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") #class name
 
         self.class_name = self.data.text
 
         self.token_advance()
 
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # {
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # {
 
         self.token_advance()
 
@@ -75,7 +75,7 @@ class CompilationEngine :
                 
                 self.CompileClassVarDec()
 
-                print(self.SymTable.clSymTable)
+          #      print(self.SymTable.clSymTable)
 
             if(self.data.text == "constructor" or self.data.text == "function" or self.data.text == "method"
                     or self.data.text == "void" or self.data.text == "int" or self.data.text == "char"  or
@@ -83,13 +83,13 @@ class CompilationEngine :
 
                 self.subroutine_type = self.data.text
                 self.CompileSubroutine()
-                print(self.SymTable.subRtSymTable)
+         #       print(self.SymTable.subRtSymTable)
 
     
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # }
+       # self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # }
 
 
-        self.file.write("</class>")
+        #self.file.write("</class>")
         
     
         return
@@ -132,33 +132,33 @@ class CompilationEngine :
 
     def CompileSubroutine(self):
 
-        self.file.write("<subroutineDec>\n")
+       # self.file.write("<subroutineDec>\n")
 
         self.SymTable.startSubroutine()
 
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # Subroutine type
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # Subroutine type
         
         self.token_advance()
 
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # Subroutine Return Type
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # Subroutine Return Type
 
         self.return_type = self.data.text 
 
         self.token_advance()
 
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # Subroutine Name
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # Subroutine Name
 
         self.function_name = self.data.text
         
         self.token_advance()
         
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # (
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # (
 
         self.token_advance()
         
         self.CompileParameterList()
             
-        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # )
+        #self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # )
         
         self.token_advance()
         
@@ -166,13 +166,13 @@ class CompilationEngine :
 
         self.CompileSubroutineBody()
 
-        self.file.write("</subroutineDec>\n")
+        #self.file.write("</subroutineDec>\n")
 
         return
 
     def CompileParameterList(self):
 
-        self.file.write("<parameterList>\n")
+        #self.file.write("<parameterList>\n")
         
         if self.subroutine_type not in ["function","constructor"]:
             
@@ -190,13 +190,13 @@ class CompilationEngine :
 
             self.token_advance()
 
-        self.file.write("</parameterList>\n")
+        #self.file.write("</parameterList>\n")
 
         return
 
     def CompileSubroutineBody(self):
 
-        self.file.write("<subroutineBody>\n")
+        #self.file.write("<subroutineBody>\n")
         
 #        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n") # {
 
@@ -235,7 +235,7 @@ class CompilationEngine :
         self.token_advance()
 
 
-        self.file.write("</subroutineBody>\n")
+        #self.file.write("</subroutineBody>\n")
 
         return
 
@@ -283,7 +283,7 @@ class CompilationEngine :
 
     def CompileStatements(self):
 
-        self.file.write("<statements>\n")
+        #self.file.write("<statements>\n")
 
         while (self.data.text == "let" or 
                 self.data.text == "if" or
@@ -311,13 +311,13 @@ class CompilationEngine :
 
                 self.CompileReturn()
         
-        self.file.write("</statements>\n")
+        #self.file.write("</statements>\n")
     
         return
 
     def CompileDo(self):
         
-        self.file.write("<doStatement>\n")
+        #self.file.write("<doStatement>\n")
         
 #        self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # do
 
@@ -331,7 +331,7 @@ class CompilationEngine :
 
         self.token_advance()
 
-        self.file.write("</doStatement>\n")
+        #self.file.write("</doStatement>\n")
 
         return
 
@@ -541,7 +541,7 @@ class CompilationEngine :
 
         self.token_advance()
 
-        self.file.write("</whileStatement>\n")
+        #self.file.write("</whileStatement>\n")
  
         return
 
@@ -732,13 +732,13 @@ class CompilationEngine :
 
         elif(self.data.text == "("):
 
-            self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # (
+          #  self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # (
 
             self.token_advance()
 
             self.CompileExpression()
 
-            self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # )
+           # self.file.write("<"+self.data.tag+">"+self.data.text+"</"+self.data.tag+">\n")  # )
 
             self.token_advance()
 
@@ -829,7 +829,7 @@ class CompilationEngine :
                 self.VMWriter.writeArithmetic("not")
 
 
-        self.file.write("</term>\n")
+        #self.file.write("</term>\n")
  
         return
 

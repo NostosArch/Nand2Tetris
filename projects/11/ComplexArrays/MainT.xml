@@ -145,6 +145,81 @@
 	<integerConstant>0</integerConstant>
 	<symbol>]</symbol>
 	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printString</identifier>
+	<symbol>(</symbol>
+	<stringConstant>Test 1: expected result: 5; actual result: </stringConstant>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printInt</identifier>
+	<symbol>(</symbol>
+	<identifier>b</identifier>
+	<symbol>[</symbol>
+	<integerConstant>2</integerConstant>
+	<symbol>]</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>println</identifier>
+	<symbol>(</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printString</identifier>
+	<symbol>(</symbol>
+	<stringConstant>Test 2: expected result: 40; actual result: </stringConstant>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printInt</identifier>
+	<symbol>(</symbol>
+	<identifier>a</identifier>
+	<symbol>[</symbol>
+	<integerConstant>5</integerConstant>
+	<symbol>]</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>println</identifier>
+	<symbol>(</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printString</identifier>
+	<symbol>(</symbol>
+	<stringConstant>Test 3: expected result: 0; actual result: </stringConstant>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printInt</identifier>
+	<symbol>(</symbol>
+	<identifier>c</identifier>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>println</identifier>
+	<symbol>(</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
 	<keyword>let</keyword>
 	<identifier>c</identifier>
 	<symbol>=</symbol>
@@ -224,6 +299,58 @@
 	<symbol>]</symbol>
 	<symbol>;</symbol>
 	<symbol>}</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printString</identifier>
+	<symbol>(</symbol>
+	<stringConstant>Test 4: expected result: 77; actual result: </stringConstant>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printInt</identifier>
+	<symbol>(</symbol>
+	<identifier>c</identifier>
+	<symbol>[</symbol>
+	<integerConstant>1</integerConstant>
+	<symbol>]</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>println</identifier>
+	<symbol>(</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printString</identifier>
+	<symbol>(</symbol>
+	<stringConstant>Test 5: expected result: 110; actual result: </stringConstant>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>printInt</identifier>
+	<symbol>(</symbol>
+	<identifier>b</identifier>
+	<symbol>[</symbol>
+	<integerConstant>1</integerConstant>
+	<symbol>]</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
+	<keyword>do</keyword>
+	<identifier>Output</identifier>
+	<symbol>.</symbol>
+	<identifier>println</identifier>
+	<symbol>(</symbol>
+	<symbol>)</symbol>
+	<symbol>;</symbol>
 	<keyword>return</keyword>
 	<symbol>;</symbol>
 	<symbol>}</symbol>

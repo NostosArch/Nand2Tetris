@@ -9,7 +9,7 @@ class VMWriter :
 
         self.vmFileName = os.path.basename(filename).split(".vm")[0]
 
-        print(self.vmFileName)
+        #print(self.vmFileName)
 
 
     def writePush(self,Segment,Index):
