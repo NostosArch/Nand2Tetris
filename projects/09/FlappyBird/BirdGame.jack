@@ -104,7 +104,7 @@ method void run() {
 		if(collision=0){
 		if(~(key=0)){do bird.moveUp();}
 		else {do bird.gravity();}
-		let status = bar.scroll(2);
+		let status = bar.scroll(3);
 		if(status = 1)
 		{
 			let score = score + 1;	
@@ -166,13 +166,12 @@ method void run() {
 		let wall_opening_height = bar.BarOpeningHeight();
 		
 		let bird_y = bird.ypos();		
-		
 		let collision = checkCollide(bird_y, wall_x, wall_width, wall_opening_width, wall_opening_height);
 
 		}
 		
 		
-		do Sys.wait(80);
+//		do Sys.wait(10);
 	
 	if(collision=1)
 		{

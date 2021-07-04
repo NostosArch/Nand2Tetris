@@ -67,13 +67,13 @@ def VMTranslator():
 
             code.Close()
 
-
+        
 
         if(len(vm_files)==1):
             exit(0)
 
         f = open(os.path.join(sys.argv[1],Directory_Name+".asm"),"w")
-
+    
         all_files = os.listdir(path_name)
 
         for file in all_files:

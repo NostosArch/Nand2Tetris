@@ -1,0 +1,172 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/12/Math.jack
+
+/**
+ * A library of commonly used mathematical functions.
+ * Note: Jack compilers implement multiplication and division using OS method calls.
+ */
+class Math {
+
+ 	static Array power_set;
+
+    /** Initializes the library. */
+    function void init() {
+
+	let power_set = Array.new(8);
+	
+	let power_set[0] = 1;
+	let power_set[1] = 2;
+	let power_set[2] = 4;
+	let power_set[3] = 8;
+	let power_set[4] = 16;
+	let power_set[5] = 32;
+	let power_set[6] = 64;
+	let power_set[7] = 128;
+ 
+	
+	return;
+	
+    }
+
+    /** Returns the absolute value of x. */
+    function int abs(int x) {
+	
+	if(x<0) { return -x; }
+	else { return x; }
+
+    }
+
+    /** Returns the product of x and y. 
+     *  When a Jack compiler detects the multiplication operator '*' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x*y and multiply(x,y) return the same value.
+     */
+    function int multiply(int x, int y) {
+	
+	var Array a;
+	var int mask,position;
+	var int sum,shiftedX;	
+	
+	let a = Array.new(16);
+		
+	let position = 0;	
+
+	while(position<16){
+	
+	if (position = 0) { let mask = 1; }
+	
+	else { let mask = mask + mask; }  // mask * 2 makes the stack overflow because the immense recursion;
+		
+	if ( ( y & mask ) = 0) { let a[position] = 0; }
+	
+	else { let a[position] = 1; }
+
+	let position = position + 1;
+
+	}
+
+	let position = 0;
+
+	let shiftedX = x;
+
+	let sum = 0;	
+
+	while ( position < 16 ) {
+	
+	if(a[position] = 1) { let sum = sum + shiftedX; }
+
+	let shiftedX = shiftedX + shiftedX;
+	
+	let position = position + 1;
+
+	}
+
+	do a.dispose();
+
+	return sum;
+	
+    }
+
+	
+    /** Returns the integer part of x/y.
+     *  When a Jack compiler detects the multiplication operator '/' in the 
+     *  program's code, it handles it by invoking this method. In other words,
+     *  the Jack expressions x/y and divide(x,y) return the same value.
+     */
+    function int divide(int x, int y) {
+    	
+	var int q,neg;
+	var int a,b;
+	let q = 0;
+	let neg = 0;
+	
+	if(x<0) { let a = -x; }
+	
+	else { let a = x; }
+
+	if(y<0) { let b = -y; }
+	
+	else { let b = y; }
+	
+		
+	if(((y < 0) & (x > 0)) | ((y > 0) & (x < 0))) { let neg = -1; }
+		
+	if( b > a){ return 0; }
+
+	let q = a/(b+b);
+
+	if ( (a - ( (q + q)*b)) < b) { 
+	
+		if (neg=0) { return (q + q); } 
+		
+		else { return -(q+q); }
+
+	}
+	
+	else { 
+	
+	if (neg = 0) { return (q + q + 1); }
+	
+	else { return -(q+q+1); }	
+		
+     }
+ }
+
+    /** Returns the integer part of the square root of x. */
+    function int sqrt(int x) {
+	
+	var int y,j,power_2;
+	let y = 0;	
+	let j = 7;
+
+
+	while(j>-1) {
+	
+	let power_2 = (y + power_set[j])*(y+power_set[j]);	
+	
+	if( ~(power_2 > x) & (power_2 > 0) ) { let y = y + power_set[j]; } 
+
+	let j = j - 1;
+		
+	}
+
+	return y;
+    }
+
+    /** Returns the greater number. */
+    function int max(int a, int b) {
+		
+	if(a>b) { return a; }
+	else { return b; }	
+
+    }
+
+    /** Returns the smaller number. */
+    function int min(int a, int b) {
+	
+	if(a<b) { return a; }
+	else { return b; }
+    }
+}

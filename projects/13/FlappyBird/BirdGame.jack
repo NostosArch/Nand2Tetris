@@ -1,0 +1,189 @@
+class BirdGame{
+
+field Bird bird;
+field int direction;
+field Bar bar;
+
+constructor BirdGame new(){
+	let bird = Bird.new(15,7);
+	let bar = Bar.new(80,50,150);
+	return this;
+
+}
+method void dispose() {
+	do bird.dispose();
+	do bar.dispose();
+	do Memory.deAlloc(this);
+	return;
+}
+
+method int checkCollide(int bird_y, int bar_x, int bar_width, int bar_opening_width, int bar_opening_height)
+{
+
+	var int bird_top_x;
+	var int bird_top_y;
+	var int bird_bottom_x;
+	var int bird_bottom_y;
+
+	var int first_rect_top_x;
+	var int first_rect_top_y;
+	var int first_rect_bottom_x;
+	var int first_rect_bottom_y;
+
+	var int second_rect_top_x;
+	var int second_rect_top_y;
+	var int second_rect_bottom_x;
+	var int second_rect_bottom_y;
+	
+	var int collision_condition_1;
+	var int collision_condition_2;
+
+	let bird_top_x = 240;
+	let bird_top_y = bird_y;
+	let bird_bottom_x = 256;
+	let bird_bottom_y = bird_y + 16;
+
+
+	let first_rect_top_x = bar_x;
+	let first_rect_top_y = 0;
+	let first_rect_bottom_x = bar_x + bar_width;
+	let first_rect_bottom_y = bar_opening_height;
+
+	let second_rect_top_x = bar_x;
+	let second_rect_top_y = bar_opening_height+bar_opening_width;  
+	let second_rect_bottom_x = bar_x + bar_width;
+	let second_rect_bottom_y = 255;
+	
+	
+	let collision_condition_1 = ((bird_bottom_x < first_rect_top_x) | (bird_top_x > first_rect_bottom_x) | (bird_bottom_y < first_rect_top_y) | (bird_top_y > first_rect_bottom_y));
+	
+	let collision_condition_2 = ((bird_bottom_x < second_rect_top_x) | (bird_top_x > second_rect_bottom_x) | (bird_bottom_y < second_rect_top_y) | (bird_top_y > second_rect_bottom_y));
+			
+
+	if(collision_condition_1 & collision_condition_2) { return 0; }
+	else { return 1; }
+}
+
+
+method void printScore(int score, String s)
+{
+	do Output.printString(s);
+	do Output.printInt(score);
+	do Output.moveCursor(1,1);
+	do s.dispose();
+	return;
+}
+ 
+method void run() {
+
+	var boolean exit;
+	var int key;	
+	var int status;
+	var int collision;
+	var int wall_width;
+	var int wall_opening_width;
+	var int wall_opening_height; 
+
+	var int bird_y;
+	var int wall_x;
+	var int barkind;
+	var int score;
+
+	let collision = 0;
+	let exit = false;
+	let barkind = 1;
+	let score = 0;
+
+	do Output.moveCursor(1,1);
+	while(~exit){
+
+		let key = Keyboard.keyPressed();
+		
+		if (key = 81 )  { let exit = true; }     // q key		
+		
+		if(collision=0){
+		if(~(key=0)){do bird.moveUp();}
+		else {do bird.gravity();}
+		let status = bar.scroll(3);
+		if(status = 1)
+		{
+			let score = score + 1;	
+			
+			if(barkind=1)
+			{
+			do bar.erase();
+			do bar.dispose();
+			let bar = Bar.new(80,60,150);
+			let barkind = 2;
+			}
+			else
+			{
+				if(barkind=2)
+				{
+					do bar.erase();
+					do bar.dispose();
+					
+					let bar = Bar.new(80,60,150);
+					let barkind = 3;	
+
+				}
+				
+				else
+				{
+					if(barkind=3)
+					{
+						do bar.erase();
+						do bar.dispose();
+					
+						let bar = Bar.new(80,20,150);
+					
+						let barkind = 4;
+					}
+					else
+					{
+						do bar.erase();
+						do bar.dispose();
+					
+						let bar = Bar.new(80,100,150);
+					
+						let barkind = 1;
+					}
+
+				
+				}
+	
+	
+			}
+				
+			do printScore(score," Score : ");
+			
+		}
+		
+		
+		let wall_width = bar.BarWidth();
+		let wall_x = bar.BarX();	
+		let wall_opening_width = bar.BarOpeningWidth();
+		let wall_opening_height = bar.BarOpeningHeight();
+		
+		let bird_y = bird.ypos();		
+		
+		let collision = checkCollide(bird_y, wall_x, wall_width, wall_opening_width, wall_opening_height);
+		
+
+		}
+		
+		
+//		do Sys.wait(10);
+	
+	if(collision=1)
+		{
+			do Output.moveCursor(0,0); 
+			do Output.printString("Game Over"); 
+			do Output.println(); let exit = true;
+		}
+	}
+	
+	return;
+
+	}
+}

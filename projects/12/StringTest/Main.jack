@@ -16,10 +16,17 @@ class Main {
 
         let s = String.new(6); // capacity 6, make sure that length 5 is displayed
         let s = s.appendChar(97);
-        let s = s.appendChar(98);
-        let s = s.appendChar(99);
+ 
+	 let s = s.appendChar(98);
+        
+        
+	let s = s.appendChar(99);
+        
+        
         let s = s.appendChar(100);
+       
         let s = s.appendChar(101);
+        
         do Output.printString("new,appendChar: ");
         do Output.printString(s);                // new, appendChar: abcde
         do Output.println();
@@ -35,6 +42,12 @@ class Main {
         do Output.printString(i);                // setInt: -32767
         do Output.println();
         
+	do i.setInt(2767);
+        do Output.printString("setInt: ");
+        do Output.printString(i);                // setInt: -32767
+        do Output.println();
+        
+
         do Output.printString("length: ");
         do Output.printInt(s.length());          // length: 5
         do Output.println();

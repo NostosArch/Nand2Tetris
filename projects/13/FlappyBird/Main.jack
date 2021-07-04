@@ -1,0 +1,10 @@
+class Main{
+
+function void main(){
+	var BirdGame flappy_bird;
+	let flappy_bird = BirdGame.new();
+	do flappy_bird.run();
+	do flappy_bird.dispose();
+	return;
+}
+}

@@ -1,7 +1,9 @@
 // This file is part of www.nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
-// File name: projects/09/Square/SquareGame.jack
+// File name: projects/11/Square/SquareGame.jack
+
+// (same as projects/09/Square/SquareGame.jack)
 
 /**
  * Implements the Square Dance game.
@@ -64,6 +66,7 @@ class SquareGame {
          if (key = 133) { let direction = 2; }   // down arrow
          if (key = 130) { let direction = 3; }   // left arrow
          if (key = 132) { let direction = 4; }   // right arrow
+		
 
          // waits for the key to be released
          while (~(key = 0)) {
