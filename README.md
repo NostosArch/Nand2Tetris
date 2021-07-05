@@ -4,7 +4,7 @@
 
 - The built projects and code successfully passed all the test cases.
 
-- Flappy Bird game (developed as part of project 09) running smoothly with the built Compiler and OS.
+- Flappy Bird game (developed as part of project 09) running smoothly using the built Compiler and OS.
 
 ## Optimizations Done:
 
