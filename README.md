@@ -9,10 +9,10 @@
 ## Optimizations Done:
 
 1. Implemented Memory Defragmentation for efficient Memory Usage. 
-    - Used First-Fit Speed and arranged freed up memory in ascending order of Starting Address locations.
+    - Used First-Fit memory allocation algorithm for speed and arranged freed up memory in ascending order of Starting Address locations.
 
 
-2. Implemented Line Drawing as Word Operations instead of a Pixel-by-Pixel Operation.
+2. Implemented Line Drawing as Word Operation instead of a Pixel-by-Pixel Operations.
 
 3. Implemented Logical Left Shift and Logical Right Shift Operations for Graphical Operations.
     - Kept the usage of Mathematical Multiplication and Division operations in Graphical operations to a minimum and replaced most of them with a Software implementation of Logical Left and Right Shift Operations.
@@ -22,4 +22,4 @@
 ## Future Work and Optimizations:
 
 1. Add Break, Continue, Switch statements and "<<" and ">>" shift operators to the Jack Language.
-2. Optimize the Assembler to generate less code.
+2. Optimize the VMTranslator to generate less assembly code.
