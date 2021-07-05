@@ -169,7 +169,6 @@ method void run() {
 		
 		let collision = checkCollide(bird_y, wall_x, wall_width, wall_opening_width, wall_opening_height);
 		
-
 		}
 		
 		

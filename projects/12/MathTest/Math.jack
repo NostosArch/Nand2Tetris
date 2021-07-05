@@ -45,10 +45,9 @@ class Math {
      */
     function int multiply(int x, int y) {
 	
-	var Array a;
 	var int mask,position;
 	var int sum,shiftedX;	
-	
+/**	
 	let a = Array.new(16);
 		
 	let position = 0;	
@@ -84,6 +83,29 @@ class Math {
 	}
 
 	do a.dispose();
+*/
+	let position = 0;
+
+	let shiftedX = x;
+
+	let sum = 0;
+
+	let mask = 1;	
+
+	while ( position < 16 ) {
+	
+		if(~(y & mask = 0)) { 
+
+			let sum = sum + shiftedX; 
+		}	
+
+		let shiftedX = shiftedX + shiftedX;
+	
+		let position = position + 1;
+	
+		let mask = mask + mask;
+
+	}	
 
 	return sum;
 	

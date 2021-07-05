@@ -77,7 +77,8 @@ class Screen {
 
 	while(row<256){
 		
-		let row_address = row * 32;
+		//let row_address = row * 32;
+		let row_address = Screen.Lsl(row,5);
 	
 		while(col < 32){
 
@@ -107,7 +108,8 @@ class Screen {
 	var int address;
 	var int rem;
 
-	let address = (32*y + (x/16));
+	//let address = (32*y + (x/16));
+	let address = (Screen.Lsl(y,5) + Screen.Lsr(x,4));
 	let rem = x & 15;
 
 
@@ -127,10 +129,59 @@ class Screen {
 
     }
 
+	function int Lsl(int num, int shift){
+
+		var int shifted,i;
+
+		let shifted = num;
+		
+		let i = 0;
+
+		while(i<shift){
+
+			let shifted = shifted + shifted;
+
+			let i = i + 1;	
+
+		}
+
+		return shifted;
+
+	}
+
+	function int Lsr(int num, int shift){
+
+
+		var int mask1,mask2,right_shifted,i,num_iter;
+
+		let mask1 = 1;
+		let mask2 = Screen.Lsl(1,shift);	
+		let i = 0;
+		let num_iter = 16 - shift;
+		let right_shifted = 0;		
+
+		while(i<num_iter){
+
+			if(~((num & mask2) = 0)){
+	
+				let right_shifted = right_shifted | mask1;
+
+			}
+		
+			let mask1 = mask1 + mask1;
+			let mask2 = mask2 + mask2;
+			
+			let i = i + 1;			
+		}
+		
+		return right_shifted;	
+
+	}
+
     /** Draws a line from pixel (x1,y1) to pixel (x2,y2), using the current color. */
     function void drawLine(int x1, int y1, int x2, int y2) {
 
-	var int a,b,dy,dx,adyMinusbdx,rem_xA,rem_xB,xA,xB,yA,yB,address;
+	var int a,b,dy,dx,adyMinusbdx,rem_xA,rem_xB,xA,xB,yA,yB,address,row_loc;
 	let a = 0;
 	let b = 0;
 	let adyMinusbdx = 0;	
@@ -246,6 +297,9 @@ class Screen {
 
 		let xB = xB - rem_xB;
 
+		let row_loc = Screen.Lsl(y1,5);
+		//let row_loc = y1 * 32;
+
 		let rem_xB = 16 - rem_xB;
 		/**	
 		do Output.printInt(rem_xA);
@@ -259,7 +313,9 @@ class Screen {
 		
 		if(xA = xB){
 
-			let address = 32*(y1) + ((xA)/16);	
+			let address = row_loc + Screen.Lsr(xA,4);	
+			//let address = row_loc + ((xA)/16);	
+			//let address = 32*(y1) + ((xA)/16);	
 		
 			if(color){
 			
@@ -277,7 +333,11 @@ class Screen {
 
 		else{
 	
-		let address = 32*(y1) + ((xA)/16);	
+		//let address = 32*(y1) + ((xA)/16);	
+		
+		//let address = row_loc + ((xA)/16);	
+
+		let address = row_loc + Screen.Lsr(xA,4);	
 		
 		if(color){
 			
@@ -299,12 +359,16 @@ class Screen {
 			
 			if(color){
 			
-				let screen[32*(y1) + ((xA)/16)] =  -1;			
+				//let screen[32*(y1) + ((xA)/16)] =  -1;			
+				//let screen[row_loc + ((xA)/16)] =  -1;			
+				let screen[row_loc + Screen.Lsr(xA,4)] =  -1;			
 			}
 			
 			else{
 					
-				let screen[32*(y1) + ((xA)/16)] =  0;			
+				//let screen[32*(y1) + ((xA)/16)] =  0;			
+				//let screen[row_loc + ((xA)/16)] =  0;			
+				let screen[row_loc + Screen.Lsr(xA,4)] =  0;			
 			
 			}
 		
@@ -315,7 +379,9 @@ class Screen {
 			
 
 			
-		let address = 32*(y1) + ((xB)/16);	
+		//let address = 32*(y1) + ((xB)/16);	
+		//let address = row_loc + ((xB)/16);	
+		let address = row_loc + Screen.Lsr(xB,4);	
 	
 		if(color){
 			
