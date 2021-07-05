@@ -12,7 +12,7 @@
     - Used First-Fit Speed and arranged freed up memory in ascending order of Starting Address locations.
 
 
-2. Implemented Line Drawing as Word Operations instead of Pixel-by-Pixel Operation.
+2. Implemented Line Drawing as Word Operations instead of a Pixel-by-Pixel Operation.
 
 3. Implemented Logical Left Shift and Logical Right Shift Operations for Graphical Operations.
     - Kept the usage of Mathematical Multiplication and Division operations in Graphical operations to a minimum and replaced most of them with a Software implementation of Logical Left and Right Shift Operations.
