@@ -4,9 +4,9 @@
 
 - The built projects and code successfully passed all the test cases.
 
-- Built Flappy Bird game running well with the built Compiler and OS.
+- Flappy Bird game (developed as part of project 09) running smoothly with the built Compiler and OS.
 
-Optimizations Done:
+## Optimizations Done:
 
 1. Implemented Memory Defragmentation for efficient Memory Usage. 
     - Used First-Fit Speed and arranged freed up memory in ascending order of Starting Address locations.
@@ -14,10 +14,12 @@ Optimizations Done:
 
 2. Implemented Line Drawing as Word Operations instead of Pixel-by-Pixel Operation.
 
+3. Implemented Logical Left Shift and Logical Right Shift Operations for Graphical Operations.
+    - Kept the usage of Mathematical Multiplication and Division operations in Graphical operations to a minimum and replaced most of them with a Software implementation of Logical Left and Right Shift Operations.
+
+    - Observed a speed up of whopping **6x** when playing Flappy Bird. Before this change the game was practically impossible to play and using shifting and bit masking operations instead played a major part in speeding up the calculations.
+
 ## Future Work and Optimizations:
 
-1. Logical Left Shift and Right Shift to speed Graphical Operations.
-
-2. Break, Continue, Switch Statements in Compiler.
-
-3. Optimize the Assembler to generate less code.
+1. Add Break, Continue, Switch statements and "<<" and ">>" shift operators to the Jack Language.
+2. Optimize the Assembler to generate less code.
