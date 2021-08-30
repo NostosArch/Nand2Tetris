@@ -18,8 +18,3 @@
     - Kept the usage of Mathematical Multiplication and Division operations in Graphical operations to a minimum and replaced most of them with a Software implementation of Logical Left and Right Shift Operations.
 
     - Observed a speed up of whopping **6x** when playing Flappy Bird. Before this change the game was practically impossible to play and using shifting and bit masking operations instead played a major part in speeding up the calculations.
-
-## Future Work and Optimizations:
-
-1. Add Break, Continue, Switch statements and "<<" and ">>" shift operators to the Jack Language.
-2. Optimize the VMTranslator to generate less assembly code.
